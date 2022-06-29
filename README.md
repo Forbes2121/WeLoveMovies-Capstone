@@ -27,15 +27,15 @@ You've been hired on as a back end developer for a new startup called WeLoveMovi
 
 ## Skills Used
 
- Ability to both build complex servers and access data through a database.
- Install and use common middleware packages.
- Receive requests through routes.
- Running tests from the command line.
- Access relevant information through route and query parameters.
- Create an error handler for the case where a route does not exist.
- Build an API following RESTful design principles.
- Create and customize a knexfile.js file.
- Create a connection to your database with knex.
- Write database queries to complete CRUD routes in an Express server.
- Return joined and nested data with Knex.
- Write database migrations using Knex's migration tools.
+* Ability to both build complex servers and access data through a database.
+* Install and use common middleware packages.
+* Receive requests through routes.
+* Running tests from the command line.
+* Access relevant information through route and query parameters.
+* Create an error handler for the case where a route does not exist.
+* Build an API following RESTful design principles.
+* Create and customize a knexfile.js file.
+* Create a connection to your database with knex.
+* Write database queries to complete CRUD routes in an Express server.
+* Return joined and nested data with Knex.
+* Write database migrations using Knex's migration tools.
