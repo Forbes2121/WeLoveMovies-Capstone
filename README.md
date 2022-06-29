@@ -1,10 +1,10 @@
 # WeLoveMovies-Capstone
 
-#Built using Express, PostSQL, and Knex
+### Built using Express, PostSQL, and Knex
 
-#Instructions:
+## Instructions:
 
-##To Run Server:
+### To Run Server:
 
 1. Fork / clone this repo
 2. cd into project folder
@@ -12,7 +12,7 @@
 4. Run npm run start:dev to start your server in development mode.
 5. Or, run npm start.
 
-##Endpoints to Test:
+### Endpoints to Test:
 
 GET /movies/?is_showing=true for movies currently in theaters.
 GET /movies/21 for details on "Spider-Man: Into the Spider-Verse"
@@ -21,11 +21,11 @@ GET /movies/21/reviews for reviews of a movie
 delete a review by using it's review_id which you can find an example of in the response from the previous request. DELETE /reviews/141, for example.
 GET /theaters for list of all theaters
 
-#Prompt
+## Prompt
 
 You've been hired on as a back end developer for a new startup called WeLoveMovies! As another developer works on the design and front end experience, you have been tasked with setting up a database and building out specific routes so that users can gain access to data about movies, theaters, and reviews.
 
-#Skills Used
+## Skills Used
 
 Ability to both build complex servers and access data through a database.
 Install and use common middleware packages.
