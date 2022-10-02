@@ -1,5 +1,7 @@
 # WeLoveMovies-Capstone
 
+## Please also check out the front-end app for the WeLoveMovies project in order to run both simultaneously: https://github.com/Forbes2121/starter-movie-front-end
+
 ### Built using Express, PostSQL, and Knex
 
 ## Instructions:
