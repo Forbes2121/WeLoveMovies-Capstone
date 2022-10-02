@@ -1,6 +1,5 @@
-//server already established, no need to make changes here
-
 const { PORT = 5000 } = process.env;
+
 
 const app = require("./app");
 const knex = require("./db/connection");

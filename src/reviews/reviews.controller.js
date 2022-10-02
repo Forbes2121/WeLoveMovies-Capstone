@@ -1,58 +1,56 @@
-//require the service.js and asyncErrorBoundary from errors
 const service = require("./reviews.service");
-const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
-//middleware to check if a review exists, if it doesn't exist return a 404
-async function reviewExists(req, res, next) {
-    const { reviewId } = req.params;
-    const review = await service.read(reviewId);
-
-    //utilize locals if a review exists
-    if (review) {
-        res.locals.review = review
-        return next();
-    }
-
-    return next ({status: 404, message: `Review cannot be found`})
-}
-
-//check to see if the review is valid with a score and a body
-function hasScoreAndBody(req, res, next) {
-    const { data: { score = null, content = null } = {} } = req.body;
-    let updatedObject = {};
-    if (!score && !content) {
-        return next({status: 400, message: "missing score and/or content"})
-    }
-    if (score) {
-        updatedObject.score = score;
-    }
-    if (content) {
-        updatedObject.content = content;
-    }
-    res.locals.update = updatedObject
-    next()
-}
-
-//delete a review given an existing review_id
 async function destroy(req, res) {
-    const { review } = res.locals
-    await service.delete(review.review_id)
-    res.sendStatus(204)
+	await service.delete(Number(res.locals.review.review_id));
+	res.sendStatus(204);
 }
 
-//update an existing review, returning the updated review including the critic info
+async function validateReviewId(req, res, next) {
+	const { reviewId } = req.params;
+	const review = await service.read(Number(reviewId));
+
+	if(review) {
+		res.locals.review = review;
+		return next();
+	}
+
+	next({
+		status: 404,
+		message: "Review cannot be found."
+	});
+}
+
 async function update(req, res) {
-    const {review} = res.locals
-    const {update} = res.locals
-    await service.update(update, review.review_id)
-    const updatedReview = await service.read(review.review_id)
-    const critic = await service.getCritic(review.critic_id)
+	const newReview = {
+		...req.body.data,
+		review_id: res.locals.review.review_id,
+	}
 
-    res.status(200).json({ data: {...updatedReview, critic: critic[0]} })
+	await service.update(newReview);
+	const review = await service.read(res.locals.review.review_id);
+
+	const reviewToReturn = {
+		...review,
+		critic: await service.readCritic(res.locals.review.critic_id),
+	}
+
+	res.json({ data: reviewToReturn });
 }
 
-//export the delete and update functions, with appropriate error handling checks
+async function readReviews(req, res) {
+	const reviews = await service.readReviews(res.locals.movie.movie_id);
+
+	for(let review of reviews) {
+		const critic = await service.readCritic(review.critic_id);
+
+		review["critic"] = critic;
+	}
+
+	res.json({ data: reviews });
+}
+
 module.exports = {
-    delete: [asyncErrorBoundary(reviewExists), asyncErrorBoundary(destroy)],
-    update: [asyncErrorBoundary(reviewExists), hasScoreAndBody, asyncErrorBoundary(update)]
-}
+	delete: [validateReviewId, destroy],
+	update: [validateReviewId, update],
+	readReviews,
+};
